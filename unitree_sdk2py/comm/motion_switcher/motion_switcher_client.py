@@ -13,7 +13,7 @@ class MotionSwitcherClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(MOTION_SWITCHER_API_VERSION)
+        self._SetApiVersion(MOTION_SWITCHER_API_VERSION)
         
         # regist api
         self._RegistApi(MOTION_SWITCHER_API_ID_CHECK_MODE, 0)

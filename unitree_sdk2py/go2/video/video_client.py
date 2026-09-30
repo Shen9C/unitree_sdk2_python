@@ -14,7 +14,7 @@ class VideoClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(VIDEO_API_VERSION)
+        self._SetApiVersion(VIDEO_API_VERSION)
         # regist api
         self._RegistApi(VIDEO_API_ID_GETIMAGESAMPLE, 0)
 

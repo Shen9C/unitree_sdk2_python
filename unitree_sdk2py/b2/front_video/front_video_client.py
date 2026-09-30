@@ -14,7 +14,7 @@ class FrontVideoClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(ROBOT_FRONT_VIDEO_API_VERSION)
+        self._SetApiVersion(ROBOT_FRONT_VIDEO_API_VERSION)
         # regist api
         self._RegistApi(ROBOT_FRONT_VIDEO_API_ID_GETIMAGESAMPLE, 0)
 

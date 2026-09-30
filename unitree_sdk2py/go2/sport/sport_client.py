@@ -27,13 +27,19 @@ class PathPoint:
 " class SportClient
 """
 class SportClient(Client):
+    """运动控制服务客户端.
+
+    默认不启用租约(enableLease=False)。若目标固件要求运动控制持有租约,
+    请使用 SportClient(enableLease=True) 创建, 并在首次调用前执行
+    WaitLeaseApplied(), 否则运动指令可能被服务端以 LEASE_DENIED(3205) 拒绝.
+    """
     def __init__(self, enableLease: bool = False):
         super().__init__(SPORT_SERVICE_NAME, enableLease)
 
 
     def Init(self):
         # set api version
-        self._SetApiVerson(SPORT_API_VERSION)
+        self._SetApiVersion(SPORT_API_VERSION)
         
         # regist api
         self._RegistApi(SPORT_API_ID_DAMP, 0)                  # Damp
@@ -49,6 +55,7 @@ class SportClient(Client):
         self._RegistApi(SPORT_API_ID_SPEEDLEVEL, 0)            # SpeedLevel
         self._RegistApi(SPORT_API_ID_HELLO, 0)                 # Hello
         self._RegistApi(SPORT_API_ID_STRETCH, 0)               # Stretch
+        self._RegistApi(SPORT_API_ID_TRAJECTORYFOLLOW, 0)      # TrajectoryFollow
         self._RegistApi(SPORT_API_ID_CONTENT, 0)               # Content
         self._RegistApi(SPORT_API_ID_DANCE1, 0)                # Dance1
         self._RegistApi(SPORT_API_ID_DANCE2, 0)                # Dance2
@@ -118,7 +125,7 @@ class SportClient(Client):
         code, data = self._Call(SPORT_API_ID_RECOVERYSTAND, parameter)
         return code
 
-    # 1007
+    # 1007 (参数键 x/y/z 分别对应 roll/pitch/yaw)
     def Euler(self, roll: float, pitch: float, yaw: float):
         p = {}
         p["x"] = roll
@@ -128,7 +135,7 @@ class SportClient(Client):
         code, data = self._Call(SPORT_API_ID_EULER, parameter)
         return code
 
-    # 1008
+    # 1008 (参数键 x/y/z 对应 vx/vy/vyaw, 由 sport 服务端协议约定; 与 obstacles_avoid 的 x/y/yaw 键不同)
     def Move(self, vx: float, vy: float, vyaw: float):
         p = {}
         p["x"] = vx
@@ -172,6 +179,29 @@ class SportClient(Client):
         p = {}
         parameter = json.dumps(p)
         code, data = self._Call(SPORT_API_ID_STRETCH, parameter)
+        return code
+
+    # 1018 (轨迹跟踪; path 需为 SPORT_PATH_POINT_SIZE 个 PathPoint, 参考坐标系为程序启动位置)
+    def TrajectoryFollow(self, path: list):
+        l = len(path)
+        if l != SPORT_PATH_POINT_SIZE:
+            return SPORT_ERR_CLIENT_POINT_PATH
+
+        path_p = []
+        for i in range(l):
+            point = path[i]
+            p = {}
+            p["t_from_start"] = point.timeFromStart
+            p["x"] = point.x
+            p["y"] = point.y
+            p["yaw"] = point.yaw
+            p["vx"] = point.vx
+            p["vy"] = point.vy
+            p["vyaw"] = point.vyaw
+            path_p.append(p)
+
+        parameter = json.dumps(path_p)
+        code = self._CallNoReply(SPORT_API_ID_TRAJECTORYFOLLOW, parameter)
         return code
 
     # 1020
@@ -319,6 +349,13 @@ class SportClient(Client):
         p = {}
         parameter = json.dumps(p)
         code, data = self._Call(SPORT_API_ID_TROTRUN, parameter)
+        return code
+
+    # 1063
+    def EconomicGait(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(SPORT_API_ID_ECONOMICGAIT, parameter)
         return code
 
     # 2044

@@ -16,7 +16,7 @@ class TestClient(Client):
     def Init(self):
         self._RegistApi(TEST_API_ID_MOVE, 0)
         self._RegistApi(TEST_API_ID_STOP, 1)
-        self._SetApiVerson(TEST_API_VERSION)
+        self._SetApiVersion(TEST_API_VERSION)
 
     def Move(self, vx: float, vy: float, vyaw: float):
         parameter = {}

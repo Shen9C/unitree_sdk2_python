@@ -5,7 +5,7 @@ from .vui_api import *
 
 
 """
-" class VideoClient
+" class VuiClient
 """
 class VuiClient(Client):
     def __init__(self):
@@ -13,7 +13,7 @@ class VuiClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(VUI_API_VERSION)
+        self._SetApiVersion(VUI_API_VERSION)
         # regist api
         self._RegistApi(VUI_API_ID_SETSWITCH, 0)
         self._RegistApi(VUI_API_ID_GETSWITCH, 0)
@@ -52,7 +52,7 @@ class VuiClient(Client):
         code, data = self._Call(VUI_API_ID_SETVOLUME, parameter)
         return code
 
-    # 1006
+    # 1004
     def GetVolume(self):
         p = {}
         parameter = json.dumps(p)

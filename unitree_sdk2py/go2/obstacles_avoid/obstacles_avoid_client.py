@@ -13,7 +13,7 @@ class ObstaclesAvoidClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(OBSTACLES_AVOID_API_VERSION)
+        self._SetApiVersion(OBSTACLES_AVOID_API_VERSION)
         # regist api
         self._RegistApi(OBSTACLES_AVOID_API_ID_SWITCH_SET, 0)
         self._RegistApi(OBSTACLES_AVOID_API_ID_SWITCH_GET, 0)
@@ -41,7 +41,7 @@ class ObstaclesAvoidClient(Client):
         else:
             return code, None
 
-    # 1003
+    # 1003 (注意: 参数键为 x/y/yaw, 与 sport.Move 的 x/y/z 不同; mode: 0=速度 1=增量位置 2=绝对位置)
     def Move(self, vx: float, vy: float, vyaw: float):
         p = {}
         p["x"] = vx

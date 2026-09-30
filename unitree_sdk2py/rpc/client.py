@@ -39,7 +39,7 @@ class Client(ClientBase):
         else:
             return code, apiVerson
 
-    def _SetApiVerson(self, apiVersion: str):
+    def _SetApiVersion(self, apiVersion: str):
         self.__apiVersion = apiVersion
 
     def _Call(self, apiId: int, parameter: str):

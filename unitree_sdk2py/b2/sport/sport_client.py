@@ -33,7 +33,7 @@ class SportClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(SPORT_API_VERSION)
+        self._SetApiVersion(SPORT_API_VERSION)
 
         # regist api
         self._RegistApi(ROBOT_SPORT_API_ID_DAMP, 0)

@@ -32,7 +32,7 @@ class G1ArmActionClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(ARM_ACTION_API_VERSION)
+        self._SetApiVersion(ARM_ACTION_API_VERSION)
 
         # regist api
         self._RegistApi(ROBOT_API_ID_ARM_ACTION_EXECUTE_ACTION, 0)

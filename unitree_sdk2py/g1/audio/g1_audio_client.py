@@ -13,7 +13,7 @@ class AudioClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(AUDIO_API_VERSION)
+        self._SetApiVersion(AUDIO_API_VERSION)
 
         # regist api
         self._RegistApi(ROBOT_API_ID_AUDIO_TTS, 0)

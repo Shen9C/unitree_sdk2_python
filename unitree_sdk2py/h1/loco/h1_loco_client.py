@@ -13,7 +13,7 @@ class LocoClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(LOCO_API_VERSION)
+        self._SetApiVersion(LOCO_API_VERSION)
 
         # regist api
         self._RegistApi(ROBOT_API_ID_LOCO_GET_FSM_ID, 0)

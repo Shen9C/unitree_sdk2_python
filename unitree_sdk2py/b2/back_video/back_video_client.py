@@ -5,7 +5,7 @@ from .back_video_api import *
 
 
 """
-" class FrontVideoClient
+" class BackVideoClient
 """
 class BackVideoClient(Client):
     def __init__(self):
@@ -14,7 +14,7 @@ class BackVideoClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(ROBOT_BACK_VIDEO_API_VERSION)
+        self._SetApiVersion(ROBOT_BACK_VIDEO_API_VERSION)
         # regist api
         self._RegistApi(ROBOT_BACK_VIDEO_API_ID_GETIMAGESAMPLE, 0)
 

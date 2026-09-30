@@ -23,7 +23,7 @@ class RobotStateClient(Client):
 
     def Init(self):
         # set api version
-        self._SetApiVerson(ROBOT_STATE_API_VERSION)
+        self._SetApiVersion(ROBOT_STATE_API_VERSION)
         # regist api
         self._RegistApi(ROBOT_STATE_API_ID_SERVICE_SWITCH, 0)
         self._RegistApi(ROBOT_STATE_API_ID_REPORT_FREQ, 0)
@@ -83,7 +83,7 @@ class RobotStateClient(Client):
         p["duration"] = duration
         parameter = json.dumps(p)
         
-        code, data = self._Call(ROBOT_STATE_API_ID_REPORT_FREQ, p)
+        code, data = self._Call(ROBOT_STATE_API_ID_REPORT_FREQ, parameter)
         return code
 
     def LowPowerSwitch(self, swit: int):
