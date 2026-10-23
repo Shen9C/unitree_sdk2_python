@@ -239,14 +239,14 @@
 | C1 | P0 | `b2/robot_state/robot_state_client.py:4` | `from ...rpc.client_internal import *` 模块不存在（应为 `rpc.internal`），**导入即 `ModuleNotFoundError`** —— **已修复**：改为 `...rpc.internal`，回归用例 `test/unit/test_b2_robot_state_import.py` |
 | C2 | P1 | `a2/audio/audio_client.py`、`g1/audio/g1_audio_client.py` | `PlayStop()` 忽略底层返回码，恒定 `return 0` —— **已修复**：透传 `code`，回归用例 `test/unit/test_audio_play_stop.py` |
 | C3 | P1 | `g1/audio/g1_audio_client.py` | `TtsMaker` 中 `self.tts_index += self.tts_index`（自乘），索引非递增 —— **已修复**：改为 `+= 1`，回归用例 `test/unit/test_g1_audio_tts.py` |
-| C4 | P3 | `h1/loco/h1_loco_client.py` | 注册了 `GET_FSM_ID` 等 6 个 GET API，但未提供对应公开方法 |
+| C4 | P3 | `h1/loco/h1_loco_client.py` | 注册了 `GET_FSM_ID` 等 6 个 GET API，但未提供对应公开方法 —— **已补全**：新增 `GetFsmId`(8001)/`GetFsmMode`(8002)/`GetBalanceMode`(8003)/`GetSwingHeight`(8004)/`GetStandHeight`(8005)/`GetPhase`(8006) 与 `SetBalanceMode`(8102)/`SetSwingHeight`(8103)，仅新增方法，回归用例 `test/unit/test_h1_loco_get.py` |
 | C5 | P2 | `utils/thread.py` `RecurrentThread` | `interval <= 0` 时走 `__LoopFunc_0`，其中引用不存在的 `self.__args` / `self.__kwargs`，**该分支必抛 `AttributeError`**；`interval > 0` 为主链路，不受影响 —— **已修复**：改用 `__loopArgs` / `__loopKwargs`，回归用例 `test/unit/test_recurrent_thread_zero_interval.py` |
 | C6 | P2 | `core/channel.py` `ChannelPublisher.Write` | `except Exception` 分支调用 `e.args()`（应访问 `e.args`），异常兜底路径本身会再抛 `TypeError` —— **已修复**：改为 `e.args`，回归用例 `test/unit/test_core_channel_writer.py` |
-| C7 | P3 | `g1/loco/g1_loco_client.py` | 注册了 `GET_FSM_MODE`(7002)、`GET_BALANCE_MODE`(7003)、`GET_SWING_HEIGHT`(7004)、`GET_STAND_HEIGHT`(7005)、`GET_PHASE`(7006)、`SET_SWING_HEIGHT`(7103)，但未提供对应公开方法 |
-| C8 | P3 | `comm/motion_switcher/motion_switcher_client.py` | 注册了 `SET_SILENT`(1004)、`GET_SILENT`(1005)，但未提供对应公开方法 |
+| C7 | P3 | `g1/loco/g1_loco_client.py` | 注册了 `GET_FSM_MODE`(7002)、`GET_BALANCE_MODE`(7003)、`GET_SWING_HEIGHT`(7004)、`GET_STAND_HEIGHT`(7005)、`GET_PHASE`(7006)、`SET_SWING_HEIGHT`(7103)，但未提供对应公开方法 —— **已补全**：新增 5 个 `Get*`（`(code, value)`）与 `SetSwingHeight`（`code`），仅新增方法，回归用例 `test/unit/test_g1_loco_get_set.py` |
+| C8 | P3 | `comm/motion_switcher/motion_switcher_client.py` | 注册了 `SET_SILENT`(1004)、`GET_SILENT`(1005)，但未提供对应公开方法 —— **已补全**：新增 `SetSilent(silent)`（请求 `{"silent":bool}`，返回 `(code, None)`）与 `GetSilent()`（返回 `(code, dict)`），仅新增方法，回归用例 `test/unit/test_motion_switcher_silent.py` |
 
-> C1–C3、C5、C6 已修复，均未改变公开签名/返回形状，并各带离线回归用例；
-> C4、C7、C8 属"注册了 API 但缺公开方法"的功能缺口（P3），按 `docs/goal.md` 仍只登记、待单独立项。
+> C1–C8 均已处理，且均未改变既有公开签名/返回形状；
+> C1–C3、C5、C6 为缺陷修复，C4、C7、C8 为按"只新增、不改既有契约"原则补全的方法缺口，各自带离线回归用例。
 > C1 属"调用即失败"，修复只需改导入路径（不改签名），见上表与 `test/unit/test_b2_robot_state_import.py`。
 
 ---

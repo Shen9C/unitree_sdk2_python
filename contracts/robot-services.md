@@ -161,8 +161,14 @@ client.Damp()
 | 方法 | API ID | 请求 JSON | 返回 |
 | :-- | :-- | :-- | :-- |
 | `GetFsmId()` | 7001 | `{}` | `(int, data)` |
+| `GetFsmMode()` | 7002 | `{}` | `(int, data)` |
+| `GetBalanceMode()` | 7003 | `{}` | `(int, data)` |
+| `GetSwingHeight()` | 7004 | `{}` | `(int, data)` |
+| `GetStandHeight()` | 7005 | `{}` | `(int, data)` |
+| `GetPhase()` | 7006 | `{}` | `(int, data)` |
 | `SetFsmId(fsm_id)` | 7101 | `{"data":fsm_id}` | `int` |
 | `SetBalanceMode(balance_mode)` | 7102 | `{"data":balance_mode}` | `int` |
+| `SetSwingHeight(swing_height)` | 7103 | `{"data":swing_height}` | `int` |
 | `SetStandHeight(stand_height)` | 7104 | `{"data":stand_height}` | `int` |
 | `SetVelocity(vx, vy, omega, duration=1.0)` | 7105 | `{"velocity":[vx,vy,omega],"duration":duration}` | `int` |
 | `SetTaskId(task_id)` | 7106 | `{"data":task_id}` | `int` |
@@ -189,8 +195,8 @@ client.Damp()
 | `WaveHand(turn_flag=False)` | `SetTaskId(1/0)` | — |
 | `ShakeHand(stage=-1)` | `SetTaskId(2/3)` | `stage=-1` 时在 2/3 间切换 |
 
-> **C7**：`Init()` 注册了 7002–7006（FSM Mode / Balance Mode / Swing Height / Stand Height / Phase）
-> 与 7103（Swing Height），但未提供对应公开方法。属“已注册未暴露”，不影响既有调用方。
+> **C7（已补全）**：新增 `GetFsmMode`(7002)/`GetBalanceMode`(7003)/`GetSwingHeight`(7004)/
+> `GetStandHeight`(7005)/`GetPhase`(7006) 与 `SetSwingHeight`(7103)，仅新增方法，未改既有契约。
 
 ## 七、h1 `LocoClient`
 
@@ -198,7 +204,15 @@ service `loco`，版本 `2.0.0.0`。
 
 | 方法 | API ID | 请求 JSON | 返回 |
 | :-- | :-- | :-- | :-- |
+| `GetFsmId()` | 8001 | `{}` | `(int, data)` |
+| `GetFsmMode()` | 8002 | `{}` | `(int, data)` |
+| `GetBalanceMode()` | 8003 | `{}` | `(int, data)` |
+| `GetSwingHeight()` | 8004 | `{}` | `(int, data)` |
+| `GetStandHeight()` | 8005 | `{}` | `(int, data)` |
+| `GetPhase()` | 8006 | `{}` | `(int, data)` |
 | `SetFsmId(fsm_id)` | 8101 | `{"data":fsm_id}` | `int` |
+| `SetBalanceMode(balance_mode)` | 8102 | `{"data":balance_mode}` | `int` |
+| `SetSwingHeight(swing_height)` | 8103 | `{"data":swing_height}` | `int` |
 | `SetStandHeight(stand_height)` | 8104 | `{"data":stand_height}` | `int` |
 | `SetVelocity(vx, vy, omega, duration=1.0)` | 8105 | `{"velocity":[vx,vy,omega],"duration":duration}` | `int` |
 | `Damp()` | 8101 | FSM `1` | `int` |
@@ -209,7 +223,8 @@ service `loco`，版本 `2.0.0.0`。
 | `HighStand()` / `LowStand()` | 8104 | `0xFFFFFFFF` / `0` | `int` |
 | `Move(vx, vy, vyaw, continous_move=False)` | 8105 | `duration` 864000 / 1 | `int` |
 
-> **C4**：注册了 8001–8006、8102、8103，但未暴露任何 GET 方法与 `SetBalanceMode`/`SetSwingHeight`。
+> **C4（已补全）**：新增 8001–8006 六个 GET 方法与 `SetBalanceMode`(8102)/`SetSwingHeight`(8103)，
+> 仅新增方法，未改既有契约。
 
 ## 八、h2 `LocoClient`
 
@@ -273,8 +288,10 @@ service `sport`，版本 `1.0.0.0`。
 | `CheckMode()` | 1001 | `{}` | `(int, dict)` |
 | `SelectMode(nameOrAlias)` | 1002 | `{"name":nameOrAlias}` | `(int, None)` |
 | `ReleaseMode()` | 1003 | `{}` | `(int, None)` |
+| `SetSilent(silent)` | 1004 | `{"silent":silent}` | `(int, None)` |
+| `GetSilent()` | 1005 | `{}` | `(int, dict)` |
 
-> **C8**：`Init()` 注册了 1004 `SET_SILENT`、1005 `GET_SILENT`，但无对应公开方法。
+> **C8（已补全）**：新增 `SetSilent`(1004) 与 `GetSilent`(1005)，仅新增方法，未改既有契约。
 
 ## 十一、`robot_state`
 

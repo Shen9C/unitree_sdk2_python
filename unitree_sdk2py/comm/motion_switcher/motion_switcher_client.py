@@ -48,4 +48,23 @@ class MotionSwitcherClient(Client):
         code, data = self._Call(MOTION_SWITCHER_API_ID_RELEASE_MODE, parameter)
       
         return code, None
+
+    # 1004
+    def SetSilent(self, silent: bool):
+        p = {}
+        p["silent"] = silent
+        parameter = json.dumps(p)
+        code, data = self._Call(MOTION_SWITCHER_API_ID_SET_SILENT, parameter)
+
+        return code, None
+
+    # 1005
+    def GetSilent(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(MOTION_SWITCHER_API_ID_GET_SILENT, parameter)
+        if code == 0:
+            return code, json.loads(data)
+        else:
+            return code, None
     

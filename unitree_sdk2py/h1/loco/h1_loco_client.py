@@ -29,12 +29,88 @@ class LocoClient(Client):
         self._RegistApi(ROBOT_API_ID_LOCO_SET_STAND_HEIGHT, 0)
         self._RegistApi(ROBOT_API_ID_LOCO_SET_VELOCITY, 0)
 
+    # 8001
+    def GetFsmId(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_FSM_ID, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
+    # 8002
+    def GetFsmMode(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_FSM_MODE, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
+    # 8003
+    def GetBalanceMode(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_BALANCE_MODE, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
+    # 8004
+    def GetSwingHeight(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_SWING_HEIGHT, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
+    # 8005
+    def GetStandHeight(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_STAND_HEIGHT, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
+    # 8006
+    def GetPhase(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_PHASE, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
     # 8101
     def SetFsmId(self, fsm_id: int):
         p = {}
         p["data"] = fsm_id
         parameter = json.dumps(p)
         code, data = self._Call(ROBOT_API_ID_LOCO_SET_FSM_ID, parameter)
+        return code
+
+    # 8102
+    def SetBalanceMode(self, balance_mode: int):
+        p = {}
+        p["data"] = balance_mode
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_SET_BALANCE_MODE, parameter)
+        return code
+
+    # 8103
+    def SetSwingHeight(self, swing_height: float):
+        p = {}
+        p["data"] = swing_height
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_SET_SWING_HEIGHT, parameter)
         return code
 
     # 8104

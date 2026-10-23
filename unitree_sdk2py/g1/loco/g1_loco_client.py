@@ -43,6 +43,56 @@ class LocoClient(Client):
         js = json.loads(data)
         return code, js.get("data")
 
+    # 7002
+    def GetFsmMode(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_FSM_MODE, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
+    # 7003
+    def GetBalanceMode(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_BALANCE_MODE, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
+    # 7004
+    def GetSwingHeight(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_SWING_HEIGHT, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
+    # 7005
+    def GetStandHeight(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_STAND_HEIGHT, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
+    # 7006
+    def GetPhase(self):
+        p = {}
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_GET_PHASE, parameter)
+        if code != 0:
+            return code, None
+        js = json.loads(data)
+        return code, js.get("data")
+
     # 7101
     def SetFsmId(self, fsm_id: int):
         p = {}
@@ -57,6 +107,14 @@ class LocoClient(Client):
         p["data"] = balance_mode
         parameter = json.dumps(p)
         code, data = self._Call(ROBOT_API_ID_LOCO_SET_BALANCE_MODE, parameter)
+        return code
+
+    # 7103
+    def SetSwingHeight(self, swing_height: float):
+        p = {}
+        p["data"] = swing_height
+        parameter = json.dumps(p)
+        code, data = self._Call(ROBOT_API_ID_LOCO_SET_SWING_HEIGHT, parameter)
         return code
 
     # 7104
