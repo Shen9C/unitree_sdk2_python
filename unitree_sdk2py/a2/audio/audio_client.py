@@ -70,5 +70,5 @@ class AudioClient(Client):
     def PlayStop(self, app_name: str) -> int:
         parameter = json.dumps({"app_name": app_name})
         code, data = self._Call(ROBOT_API_ID_AUDIO_STOP_PLAY, parameter)
-        return 0
+        return code
 

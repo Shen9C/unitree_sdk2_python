@@ -26,7 +26,7 @@ class AudioClient(Client):
 
     ## API Call ##
     def TtsMaker(self, text: str, speaker_id: int):
-        self.tts_index += self.tts_index
+        self.tts_index += 1
         p = {}
         p["index"] = self.tts_index
         p["text"] = text
@@ -67,5 +67,5 @@ class AudioClient(Client):
     
     def PlayStop(self, app_name: str):
         parameter = json.dumps({"app_name": app_name})
-        self._Call(ROBOT_API_ID_AUDIO_STOP_PLAY, parameter)
-        return 0
+        code, data = self._Call(ROBOT_API_ID_AUDIO_STOP_PLAY, parameter)
+        return code
